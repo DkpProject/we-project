@@ -1,0 +1,130 @@
+@section('title', 'аренда и продажа ненужных вещей')
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&subset=cyrillic" rel="stylesheet">
+	<link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/jquery.formstyler.css" rel="stylesheet">
+	<link href="/css/styles.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.formstyler.js"></script>
+    <script src="/js/main.js"></script>
+	
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	<!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
+  </head>
+  <body>
+    
+	<div class="container main">
+		<div class="row">
+			<div class="sidebar">
+				<a href="{{ url('/') }}"><div class="sidebar-logo">
+					{{ config('app.name', 'Laravel') }}
+				</div></a>
+				@if (Auth::guest())
+					<div class="left-nav">
+					<ul>
+						<a href="{{ url('/login') }}"><li>Авторизация</li></a>
+						<a href="{{ url('/register') }}"><li>Регистрация</li></a>
+					</ul>
+				</div>
+				@else
+				<div class="sidebar-user">
+					<div class="user-avatar">
+						<i class="fa fa-user"></i>
+					</div>
+					<div class="user-name dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->firstname }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ url('/catalog/add') }}">Добавить товар</a>
+                                    <a href="{{ url('/service/add') }}">Добавить услугу</a>
+                                    <a href="{{ url('/profile') }}">Профиль</a>
+                                    <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выход</a>
+
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+					</div>
+				</div>
+				<div class="left-nav">
+					<ul>
+						<a href="/profile"><li>Профиль</li></a>
+						<a href="/catalog"><li>Товары</li></a>
+						<a href="/service"><li>Услуги</li></a>
+					</ul>
+				</div>
+				@endif
+			</div>
+			<div class="contentwrap">
+			<div class="contentbar">
+				<div class="search-panel">
+					<i class="fa fa-bars" aria-hidden="true"></i><input type="text" placeholder="Поиск по каталогу товаров и услуг" class="search-query"> <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+				</div>
+
+				<div class="page">
+
+					@if (session('status'))
+						<div class="alert alert-{{ session('type') }}">
+							{{ session('status') }}
+						</div>
+					@endif
+
+					@yield('content')
+
+				</div>
+			</div>
+			<div class="rightbar">
+				<div class="right-panel">
+					<a class="topbutton" href="/catalog/add">Добавить</a>
+				</div>
+				<div class="right-title">
+					Популярные товары
+				</div>
+				<div class="r-good-card">
+					<img src="/img/test.jpg">
+					<div class="r-good-title"><a href="#">Apple iPhone 6s</a></div>
+					<div class="r-good-price">10000 р.</div>
+				</div>
+				<div class="r-good-card">
+					<img src="/img/test.jpg">
+					<div class="r-good-title"><a href="#">Apple iPhone 6s</a></div>
+					<div class="r-good-price">10000 р.</div>
+				</div>
+				<div class="r-good-card">
+					<img src="/img/test.jpg">
+					<div class="r-good-title"><a href="#">Apple iPhone 6s</a></div>
+					<div class="r-good-price">10000 р.</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+  </body>
+</html>

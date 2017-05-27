@@ -1,0 +1,8 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^design.we-project.ru$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.design.we-project.ru$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
+AddDefaultCharset utf-8
+AddType 'text/html; charset=utf-8' .html .htm .shtml
